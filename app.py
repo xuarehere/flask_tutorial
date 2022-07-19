@@ -1,20 +1,41 @@
-from flask import Flask
-app = Flask(__name__)
-
-# @app.route('/')
-# def hello():
-#     return 'Welcome to My Watchlist!'
-
-# @app.route('/')
-# def hello():
-#     return '<h1>Hello Totoro!</h1><img src="http://helloflask.com/totoro.gif">'
-
+from flask import Flask, render_template
 from flask import url_for
 from markupsafe import escape
+app = Flask(__name__)
 
-# ...
+# 第 3 章：模板 - Flask 入门教程
+# https://read.helloflask.com/c3-template
+# -*- coding: utf-8 -*-
+
+
+name = 'Grey Li'
+movies = [
+    {'title': 'My Neighbor Totoro', 'year': '1988'},
+    {'title': 'Dead Poets Society', 'year': '1989'},
+    {'title': 'A Perfect World', 'year': '1993'},
+    {'title': 'Leon', 'year': '1994'},
+    {'title': 'Mahjong', 'year': '1996'},
+    {'title': 'Swallowtail Butterfly', 'year': '1996'},
+    {'title': 'King of Comedy', 'year': '1999'},
+    {'title': 'Devils on the Doorstep', 'year': '1999'},
+    {'title': 'WALL-E', 'year': '2008'},
+    {'title': 'The Pork of Music', 'year': '2012'},
+]
+
 
 @app.route('/')
+def index():
+    """
+    render_template
+        'index.html'    模板文件名称
+        name    模板中使用的变量名称
+        movies  模板中使用的变量名称
+    :return:
+    """
+    return render_template('index.html', name=name, movies=movies)
+
+
+@app.route('/hello')
 def hello():
     return 'Hello'
 

@@ -21,6 +21,11 @@ zipp==3.6.0
 pip install -r requirements.txt
 ```
 
+# 运行
+```shell
+$flask_tutorial# flask run
+
+```
 
 # References
 [Flask 入门教程](https://tutorial.helloflask.com/)
