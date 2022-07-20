@@ -26,6 +26,11 @@ pip install -r requirements.txt
 $flask_tutorial# flask run
 
 ```
+第 5 章：数据库 - Flask 入门教程
+https://tutorial.helloflask.com/database/
+
+# chapter4
+![](imgs/ch4.png)
 
 # References
 [Flask 入门教程](https://tutorial.helloflask.com/)
