@@ -143,12 +143,38 @@ def forge():
     db.session.commit()
     click.echo('Done.')
 
+# @app.route('/')
+# def index():
+#     user = User.query.first()  # 读取用户记录
+#     print("user:", user, user.name, type(user.name))
+#     movies = Movie.query.all()  # 读取所有电影记录
+#     return render_template('index.html', user=user, name =user.name ,movies=movies)
+
+
+# ------------- chapter 6 -------------
+# 装饰器注册一个错误处理函数，它的作用和视图函数类似，当 404 错误发生时，这个函数会被触发，返回值会作为响应主体返回给客户端
+# @app.errorhandler(404)  # 传入要处理的错误代码
+# def page_not_found(e):  # 接受异常对象作为参数
+#     user = User.query.first()
+#     return render_template('404.html', user=user), 404  # 返回模板和状态码
+
+
+@app.context_processor
+def inject_user():
+    user = User.query.first()
+    return dict(user=user)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
 @app.route('/')
 def index():
-    user = User.query.first()  # 读取用户记录
-    print("user:", user, user.name, type(user.name))
-    movies = Movie.query.all()  # 读取所有电影记录
-    return render_template('index.html', user=user, name =user.name ,movies=movies)
+    movies = Movie.query.all()
+    return render_template('index.html', movies=movies)
+
 
 if __name__ == '__main__':
     pass

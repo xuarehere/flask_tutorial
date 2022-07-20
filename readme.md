@@ -26,11 +26,24 @@ pip install -r requirements.txt
 $flask_tutorial# flask run
 
 ```
+# chapter
+## chapter4
+![](imgs/ch4.png)
+
+
+## chapter5
+```shell
+flask forge
+flask run
+```
+
+# chapter 6
+![](imgs/ch6.png)
+
 第 5 章：数据库 - Flask 入门教程
 https://tutorial.helloflask.com/database/
 
-# chapter4
-![](imgs/ch4.png)
+
 
 # References
 [Flask 入门教程](https://tutorial.helloflask.com/)
