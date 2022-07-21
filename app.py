@@ -1,11 +1,10 @@
 from flask import Flask, render_template
-from flask import url_for
+from flask import request, url_for, redirect, flash
 from markupsafe import escape
 import os
 import sys
 import click
 
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -170,8 +169,32 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 
-@app.route('/')
+# @app.route('/')
+# def index():
+#     movies = Movie.query.all()
+#     return render_template('index.html', movies=movies)
+
+# ------------- chapter 7 -------------
+
+
+app.config['SECRET_KEY'] = 'dev'  # 等同于 app.secret_key = 'dev'
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':  # 判断是否是 POST 请求
+        # 获取表单数据
+        title = request.form.get('title')  # 传入表单对应输入字段的 name 值
+        year = request.form.get('year')
+        # 验证数据
+        if not title or not year or len(year) > 4 or len(title) > 60:
+            flash('Invalid input.')  # 显示错误提示，字符串内容 在 base.html 中被 get_flashed_messages 函数进行接收
+            return redirect(url_for('index'))  # 重定向回主页
+        # 保存表单数据到数据库
+        movie = Movie(title=title, year=year)  # 创建记录
+        db.session.add(movie)  # 添加到数据库会话
+        db.session.commit()  # 提交数据库会话
+        flash('Item created.')  # 显示成功创建的提示
+        return redirect(url_for('index'))  # 重定向回主页
+
     movies = Movie.query.all()
     return render_template('index.html', movies=movies)
 
