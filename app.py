@@ -4,7 +4,8 @@ from markupsafe import escape
 import os
 import sys
 import click
-
+from gevent import pywsgi
+import argparse
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -187,17 +188,62 @@ def index():
         # 验证数据
         if not title or not year or len(year) > 4 or len(title) > 60:
             flash('Invalid input.')  # 显示错误提示，字符串内容 在 base.html 中被 get_flashed_messages 函数进行接收
-            return redirect(url_for('index'))  # 重定向回主页
+            return redirect(url_for('index'))  # 重定向回主页,重新进入函数 def index():
         # 保存表单数据到数据库
         movie = Movie(title=title, year=year)  # 创建记录
         db.session.add(movie)  # 添加到数据库会话
         db.session.commit()  # 提交数据库会话
         flash('Item created.')  # 显示成功创建的提示
-        return redirect(url_for('index'))  # 重定向回主页
+        return redirect(url_for('index'))  # 重定向回主页,重新进入函数 def index():
 
     movies = Movie.query.all()
-    return render_template('index.html', movies=movies)
+    return render_template('index.html', movies=movies) # 加载主页的 html 模板文件，进行显示
 
+
+@app.route('/movie/edit/<int:movie_id>', methods=['GET', 'POST'])
+def edit(movie_id):
+    movie = Movie.query.get_or_404(movie_id)
+
+    if request.method == 'POST':  # 处理编辑表单的提交请求
+        title = request.form['title']
+        year = request.form['year']
+
+        if not title or not year or len(year) != 4 or len(title) > 60:
+            flash('Invalid input.')
+            return redirect(url_for('edit', movie_id=movie_id))  # 重定向回对应的编辑页面
+
+        movie.title = title  # 更新标题
+        movie.year = year    # 更新年份
+        db.session.commit()  # 提交数据库会话
+        flash('Item updated.')
+        return redirect(url_for('index'))  # 重定向回主页
+
+    return render_template('edit.html', movie=movie)  # 传入被编辑的电影记录
+
+# 删除电影条目
+@app.route('/movie/delete/<int:movie_id>', methods=['POST'])  # 限定只接受 POST 请求
+def delete(movie_id):
+    movie = Movie.query.get_or_404(movie_id)  # 获取电影记录
+    db.session.delete(movie)  # 删除对应的记录
+    db.session.commit()  # 提交数据库会话
+    flash('Item deleted.')
+    return redirect(url_for('index'))  # 重定向回主页
+
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ip", type=str, default="127.0.0.1")
+    parser.add_argument("--port", type=str, default="5001")
+    return parser.parse_args()
+
+def main():
+    args = parse_args()
+    ip = args.ip
+    port = int(args.port)
+    server = pywsgi.WSGIServer((ip, port), app)
+    server.serve_forever()
 
 if __name__ == '__main__':
+    main()
     pass
