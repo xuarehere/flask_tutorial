@@ -21,7 +21,12 @@
     <nav>   <!--    添加了一个导航栏    -->
         <ul>
             <li><a href="{{ url_for('index') }}">Home</a></li>
-
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('settings') }}">Settings</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+            {% endif %}
         </ul>
     </nav>
     {% block content %}{% endblock %}   <!-- 在子模板中插入页面主体内容 -->

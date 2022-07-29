@@ -44,7 +44,10 @@ flask run
 第 5 章：数据库 - Flask 入门教程
 https://tutorial.helloflask.com/database/
 
+# 登录账号密码
 
+username:admin
+password:123
 
 # References
 [Flask 入门教程](https://tutorial.helloflask.com/)
