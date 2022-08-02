@@ -49,5 +49,46 @@ https://tutorial.helloflask.com/database/
 username:admin
 password:123
 
+# chapter 9 
+
+```shell
+(env) $ python test_watchlist.py
+
+```
+
+```shell
+(env) $ pip install coverage
+(env) $ coverage run --source=app test_watchlist.py
+```
+```shell
+(venv) D:flask_tutorial>python test_watchlist.py
+...............
+----------------------------------------------------------------------
+Ran 15 tests in 3.335s
+
+OK
+```
+返回 ok，表示测试通过
+返回 failed，表示有测试不通过
+
+```SHELL
+(venv) D:\flask_tutorial>coverage report
+Name     Stmts   Miss  Cover
+----------------------------
+app.py     185     31    83%
+----------------------------
+TOTAL      185     31    83%
+
+```
+Miss: 代表没有测试到的代码行数
+
+
+```shell
+coverage html
+# htmlcov/app_py.html   浏览器打开
+```
+
+![](imgs/ch9.png)
+
 # References
 [Flask 入门教程](https://tutorial.helloflask.com/)
