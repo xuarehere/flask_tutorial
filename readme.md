@@ -90,5 +90,58 @@ coverage html
 
 ![](imgs/ch9.png)
 
+# chapter 10 组织你的代码
+目前的项目文件结构：
+```shell
+
+├── .flaskenv
+├── app.py
+├── test_watchlist.py
+├── static
+│   ├── favicon.ico
+│   ├── images
+│   │   ├── avatar.png
+│   │   └── totoro.gif
+│   └── style.css
+└── templates
+    ├── 400.html
+    ├── 404.html
+    ├── 500.html
+    ├── base.html
+    ├── edit.html
+    ├── index.html
+    ├── login.html
+    └── settings.html
+```
+
+
+修改之后的目录结构
+```shell
+├── .flaskenv
+├── test_watchlist.py
+└── watchlist  # 程序包
+    ├── __init__.py
+    ├── commands.py
+    ├── errors.py
+    ├── models.py
+    ├── views.py
+    ├── static
+    │   ├── favicon.ico
+    │   ├── images
+    │   │   ├── avatar.png
+    │   │   └── totoro.gif
+    │   └── style.css
+    └── templates
+        ├── base.html
+        ├── edit.html
+        ├── errors
+        │   ├── 400.html
+        │   ├── 404.html
+        │   └── 500.html
+        ├── index.html
+        ├── login.html
+        └── settings.html
+```
+
 # References
 [Flask 入门教程](https://tutorial.helloflask.com/)
