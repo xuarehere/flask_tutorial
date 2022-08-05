@@ -3,18 +3,29 @@ https://tutorial.helloflask.com/form/
 
 # requirements
 ```shell
+cffi==1.15.1
 click==8.0.4
 colorama==0.4.5
+coverage==6.2
 dataclasses==0.8
 Flask==2.0.3
+Flask-Login==0.5.0
+Flask-SQLAlchemy==2.5.1
+gevent==21.12.0
+greenlet==1.1.2
 importlib-metadata==4.8.3
 itsdangerous==2.0.1
 Jinja2==3.0.3
 MarkupSafe==2.0.1
+pycparser==2.21
 python-dotenv==0.20.0
+SQLAlchemy==1.4.39
 typing_extensions==4.1.1
 Werkzeug==2.0.3
 zipp==3.6.0
+zope.event==4.5.0
+zope.interface==5.4.0
+
 
 ```
 
@@ -91,6 +102,21 @@ coverage html
 ![](imgs/ch9.png)
 
 # chapter 10 组织你的代码
+
+**旧的代码**  
+见 app.py
+
+**新的代码**
+
+
+程序入口地址
+wsgi.py
+
+在调试工具，进行调试的时候，需要对 `wsgi.py` 中的如下部分，取消注释
+```PYTHON
+app.run(host="127.0.0.1", port=5004, debug=True)
+```
+
 目前的项目文件结构：
 ```shell
 

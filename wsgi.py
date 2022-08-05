@@ -7,4 +7,4 @@ if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
 
 from watchlist import app
-app.run(host="127.0.0.1", port=5004, debug=True)
+# app.run(host="127.0.0.1", port=5004, debug=True)    # 调试时候，取消注释
